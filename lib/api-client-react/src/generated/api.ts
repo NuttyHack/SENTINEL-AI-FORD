@@ -29,10 +29,12 @@ import type {
   InvestigationInput,
   IssueDetail,
   ListIssuesParams,
+  ListRecallsParams,
   ListVehiclesParams,
   OtaSimulation,
   OtaSimulationInput,
   QualityIssue,
+  RecallDatasetPage,
   RecallRadar,
   Report,
   ReportInput,
@@ -900,6 +902,90 @@ export function useGetRecallRadar<TData = Awaited<ReturnType<typeof getRecallRad
  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
 
   const queryOptions = getGetRecallRadarQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getListRecallsUrl = (params?: ListRecallsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/recalls?${stringifiedParams}` : `/api/recalls`
+}
+
+/**
+ * @summary Query the provided Ford recall dataset
+ */
+export const listRecalls = async (params?: ListRecallsParams, options?: Parameters<typeof customFetch>[1]): Promise<RecallDatasetPage> => {
+
+  return customFetch<RecallDatasetPage>(getListRecallsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getListRecallsQueryKey = (params?: ListRecallsParams,) => {
+    return [
+    `/api/recalls`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getListRecallsQueryOptions = <TData = Awaited<ReturnType<typeof listRecalls>>, TError = ErrorType<unknown>>(params?: ListRecallsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listRecalls>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getListRecallsQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listRecalls>>> = ({ signal }) => listRecalls(params, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listRecalls>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type ListRecallsQueryResult = NonNullable<Awaited<ReturnType<typeof listRecalls>>>
+export type ListRecallsQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary Query the provided Ford recall dataset
+ */
+
+export function useListRecalls<TData = Awaited<ReturnType<typeof listRecalls>>, TError = ErrorType<unknown>>(
+ params?: ListRecallsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listRecalls>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getListRecallsQueryOptions(params,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

@@ -22,6 +22,8 @@ tags:
     description: Explainable AI assistant
   - name: recall-radar
     description: Predictive recall risk signals
+  - name: recalls
+    description: Ford recall dataset exploration
   - name: software-intelligence
     description: Software regression intelligence
   - name: ota-simulator
@@ -216,6 +218,47 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RecallRadar"
+  /recalls:
+    get:
+      operationId: listRecalls
+      tags: [recalls]
+      summary: Query the provided Ford recall dataset
+      parameters:
+        - in: query
+          name: recall
+          description: Search campaign IDs and recall descriptions
+          schema: { type: string }
+          required: false
+        - in: query
+          name: vehicle
+          description: Filter by vehicle model or model year
+          schema: { type: string }
+          required: false
+        - in: query
+          name: component
+          description: Filter by component or system
+          schema: { type: string }
+          required: false
+        - in: query
+          name: remedy
+          description: Filter by remedy action
+          schema: { type: string }
+          required: false
+        - in: query
+          name: page
+          schema: { type: number, minimum: 1 }
+          required: false
+        - in: query
+          name: pageSize
+          schema: { type: number, minimum: 1, maximum: 100 }
+          required: false
+      responses:
+        "200":
+          description: Filtered and paginated Ford recall records
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecallDatasetPage"
   /software-intelligence:
     get:
       operationId: getSoftwareIntelligence
@@ -274,7 +317,7 @@ components:
         value: { type: number }
     Dashboard:
       type: object
-      required: [qualityHealth, activeIssues, criticalIssues, recallRisks, affectedVehicles, financialExposure, leadTimeDays, confidence, resolvedIssues, trend, modelRates, componentRates, regions, activity]
+      required: [qualityHealth, activeIssues, criticalIssues, recallRisks, affectedVehicles, financialExposure, leadTimeDays, confidence, resolvedIssues, trend, modelRates, componentRates, regions, activity, recallDataset]
       properties:
         qualityHealth: { type: number }
         activeIssues: { type: number }
@@ -300,6 +343,8 @@ components:
         activity:
           type: array
           items: { $ref: "#/components/schemas/Activity" }
+        recallDataset:
+          $ref: "#/components/schemas/RecallDatasetSummary"
     RegionRisk:
       type: object
       required: [region, score, affected]
@@ -475,7 +520,7 @@ components:
           items: { type: string }
     RecallRadar:
       type: object
-      required: [signals, totalAtRisk, criticalSignals, averageLeadTime, syntheticLabel, detectionTrend]
+      required: [signals, totalAtRisk, criticalSignals, averageLeadTime, syntheticLabel, detectionTrend, datasetCoverage]
       properties:
         signals:
           type: array
@@ -487,6 +532,8 @@ components:
         detectionTrend:
           type: array
           items: { $ref: "#/components/schemas/TrendPoint" }
+        datasetCoverage:
+          $ref: "#/components/schemas/RecallDatasetCoverage"
     RecallSignal:
       type: object
       required: [id, title, component, severity, status, affectedVehicles, detectedDaysAgo, confidence, exposure, signal, leadingHypothesis, whyFlagged, riskScore]
@@ -506,6 +553,52 @@ components:
           type: array
           items: { type: string }
         riskScore: { type: number }
+    RecallRecord:
+      type: object
+      required: [campaignId, vehicleModels, component, errorDescription, estimatedUnitsAffected, remedyAction]
+      properties:
+        campaignId: { type: string }
+        vehicleModels: { type: string }
+        component: { type: string }
+        errorDescription: { type: string }
+        estimatedUnitsAffected: { type: number }
+        remedyAction: { type: string }
+    RecallDatasetCoverage:
+      type: object
+      required: [datasetId, manufacturer, label, sourceFile, sourceDescription, coveragePeriod, synthetic, recordCount, estimatedUnitsAffected]
+      properties:
+        datasetId: { type: string }
+        manufacturer: { type: string }
+        label: { type: string }
+        sourceFile: { type: string }
+        sourceDescription: { type: string }
+        coveragePeriod: { type: string }
+        synthetic: { type: boolean }
+        recordCount: { type: number }
+        estimatedUnitsAffected: { type: number }
+    RecallDatasetPage:
+      type: object
+      required: [items, page, pageSize, total, totalPages, coverage]
+      properties:
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/RecallRecord" }
+        page: { type: number }
+        pageSize: { type: number }
+        total: { type: number }
+        totalPages: { type: number }
+        coverage:
+          $ref: "#/components/schemas/RecallDatasetCoverage"
+    RecallDatasetSummary:
+      type: object
+      required: [campaigns, estimatedUnitsAffected, highestExposureRecall, topVehicleModel, topComponent, sourceLabel]
+      properties:
+        campaigns: { type: number }
+        estimatedUnitsAffected: { type: number }
+        highestExposureRecall: { type: string }
+        topVehicleModel: { type: string }
+        topComponent: { type: string }
+        sourceLabel: { type: string }
     SoftwareIntelligence:
       type: object
       required: [baselineVersion, comparisonVersion, subsystem, regressionAlert, changeInDiagnostics, changeInFailures, changeInWarranty, confidence, affectedModels, versions, evidence, recommendation]

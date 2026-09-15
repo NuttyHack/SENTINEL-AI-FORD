@@ -6,6 +6,7 @@ import {
   SimulateOtaUpdateBody,
   SimulateOtaUpdateResponse,
 } from "@workspace/api-zod";
+import { fordRecallCoverage } from "../lib/ford-recalls";
 
 const router: IRouter = Router();
 
@@ -94,6 +95,7 @@ router.get("/recall-radar", (_req, res): void => {
       averageLeadTime: 31,
       syntheticLabel: "Demonstration environment using synthetic data",
       detectionTrend,
+      datasetCoverage: fordRecallCoverage,
     }),
   );
 });

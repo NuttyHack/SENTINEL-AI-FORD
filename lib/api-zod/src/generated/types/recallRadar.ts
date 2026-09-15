@@ -5,6 +5,7 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+import type { RecallDatasetCoverage } from './recallDatasetCoverage';
 import type { RecallSignal } from './recallSignal';
 import type { TrendPoint } from './trendPoint';
 
@@ -15,4 +16,5 @@ export interface RecallRadar {
   averageLeadTime: number;
   syntheticLabel: string;
   detectionTrend: TrendPoint[];
+  datasetCoverage: RecallDatasetCoverage;
 }

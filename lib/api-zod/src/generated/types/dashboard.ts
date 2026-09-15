@@ -6,6 +6,7 @@
  * OpenAPI spec version: 0.1.0
  */
 import type { Activity } from './activity';
+import type { RecallDatasetSummary } from './recallDatasetSummary';
 import type { RegionRisk } from './regionRisk';
 import type { TrendPoint } from './trendPoint';
 
@@ -24,4 +25,5 @@ export interface Dashboard {
   componentRates: TrendPoint[];
   regions: RegionRisk[];
   activity: Activity[];
+  recallDataset: RecallDatasetSummary;
 }

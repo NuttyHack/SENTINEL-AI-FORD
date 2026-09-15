@@ -13,10 +13,13 @@ import {
   GetVehicleResponse,
   ListIssuesQueryParams,
   ListIssuesResponse,
+  ListRecallsQueryParams,
+  ListRecallsResponse,
   ListVehiclesQueryParams,
   ListVehiclesResponse,
   ListInvestigationsResponse,
 } from "@workspace/api-zod";
+import { filterFordRecalls, fordRecallCoverage, getFordRecallSummary } from "../lib/ford-recalls";
 
 const router: IRouter = Router();
 
@@ -295,6 +298,7 @@ const dashboard = {
     { id: "a3", title: "Investigation evidence added", detail: "Infotainment Restart Pattern", time: "2 hr ago", type: "evidence" },
     { id: "a4", title: "Issue resolved", detail: "Brake pad wear variance", time: "Yesterday", type: "resolved" },
   ],
+  recallDataset: getFordRecallSummary(),
 };
 
 function parseId(value: string | string[] | undefined): string {
@@ -318,6 +322,31 @@ router.get("/issues", (req, res): void => {
       (!severity || issue.severity.toLowerCase() === severity.toLowerCase()),
   );
   res.json(ListIssuesResponse.parse(filtered));
+});
+
+router.get("/recalls", (req, res): void => {
+  const parsed = ListRecallsQueryParams.safeParse(req.query);
+  if (!parsed.success) {
+    res.status(400).json({ error: parsed.error.message });
+    return;
+  }
+
+  const page = parsed.data.page ?? 1;
+  const pageSize = parsed.data.pageSize ?? 10;
+  const filtered = filterFordRecalls(parsed.data);
+  const start = (page - 1) * pageSize;
+  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+
+  res.json(
+    ListRecallsResponse.parse({
+      items: filtered.slice(start, start + pageSize),
+      page,
+      pageSize,
+      total: filtered.length,
+      totalPages,
+      coverage: fordRecallCoverage,
+    }),
+  );
 });
 
 router.get("/issues/:id", (req, res): void => {

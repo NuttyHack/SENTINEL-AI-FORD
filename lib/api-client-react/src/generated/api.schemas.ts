@@ -28,6 +28,15 @@ export interface Activity {
   type: string;
 }
 
+export interface RecallDatasetSummary {
+  campaigns: number;
+  estimatedUnitsAffected: number;
+  highestExposureRecall: string;
+  topVehicleModel: string;
+  topComponent: string;
+  sourceLabel: string;
+}
+
 export interface Dashboard {
   qualityHealth: number;
   activeIssues: number;
@@ -43,6 +52,7 @@ export interface Dashboard {
   componentRates: TrendPoint[];
   regions: RegionRisk[];
   activity: Activity[];
+  recallDataset: RecallDatasetSummary;
 }
 
 export interface QualityIssue {
@@ -185,6 +195,18 @@ export interface RecallSignal {
   riskScore: number;
 }
 
+export interface RecallDatasetCoverage {
+  datasetId: string;
+  manufacturer: string;
+  label: string;
+  sourceFile: string;
+  sourceDescription: string;
+  coveragePeriod: string;
+  synthetic: boolean;
+  recordCount: number;
+  estimatedUnitsAffected: number;
+}
+
 export interface RecallRadar {
   signals: RecallSignal[];
   totalAtRisk: number;
@@ -192,6 +214,25 @@ export interface RecallRadar {
   averageLeadTime: number;
   syntheticLabel: string;
   detectionTrend: TrendPoint[];
+  datasetCoverage: RecallDatasetCoverage;
+}
+
+export interface RecallRecord {
+  campaignId: string;
+  vehicleModels: string;
+  component: string;
+  errorDescription: string;
+  estimatedUnitsAffected: number;
+  remedyAction: string;
+}
+
+export interface RecallDatasetPage {
+  items: RecallRecord[];
+  page: number;
+  pageSize: number;
+  total: number;
+  totalPages: number;
+  coverage: RecallDatasetCoverage;
 }
 
 export interface SoftwareVersion {
@@ -252,6 +293,34 @@ severity?: string;
 
 export type ListVehiclesParams = {
 search?: string;
+};
+
+export type ListRecallsParams = {
+/**
+ * Search campaign IDs and recall descriptions
+ */
+recall?: string;
+/**
+ * Filter by vehicle model or model year
+ */
+vehicle?: string;
+/**
+ * Filter by component or system
+ */
+component?: string;
+/**
+ * Filter by remedy action
+ */
+remedy?: string;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+pageSize?: number;
 };
 
 export type GetSoftwareIntelligenceParams = {

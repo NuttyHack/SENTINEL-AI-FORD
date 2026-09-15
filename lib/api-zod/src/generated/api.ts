@@ -53,7 +53,15 @@ export const GetDashboardResponse = zod.object({
   "detail": zod.string(),
   "time": zod.string(),
   "type": zod.string()
-}))
+})),
+  "recallDataset": zod.object({
+  "campaigns": zod.number(),
+  "estimatedUnitsAffected": zod.number(),
+  "highestExposureRecall": zod.string(),
+  "topVehicleModel": zod.string(),
+  "topComponent": zod.string(),
+  "sourceLabel": zod.string()
+})
 })
 
 
@@ -300,7 +308,62 @@ export const GetRecallRadarResponse = zod.object({
   "detectionTrend": zod.array(zod.object({
   "label": zod.string(),
   "value": zod.number()
-}))
+})),
+  "datasetCoverage": zod.object({
+  "datasetId": zod.string(),
+  "manufacturer": zod.string(),
+  "label": zod.string(),
+  "sourceFile": zod.string(),
+  "sourceDescription": zod.string(),
+  "coveragePeriod": zod.string(),
+  "synthetic": zod.boolean(),
+  "recordCount": zod.number(),
+  "estimatedUnitsAffected": zod.number()
+})
+})
+
+
+/**
+ * @summary Query the provided Ford recall dataset
+ */
+
+export const listRecallsQueryPageSizeMax = 100;
+
+
+
+export const ListRecallsQueryParams = zod.object({
+  "recall": zod.coerce.string().optional().describe('Search campaign IDs and recall descriptions'),
+  "vehicle": zod.coerce.string().optional().describe('Filter by vehicle model or model year'),
+  "component": zod.coerce.string().optional().describe('Filter by component or system'),
+  "remedy": zod.coerce.string().optional().describe('Filter by remedy action'),
+  "page": zod.coerce.number().min(1).optional(),
+  "pageSize": zod.coerce.number().min(1).max(listRecallsQueryPageSizeMax).optional()
+})
+
+export const ListRecallsResponse = zod.object({
+  "items": zod.array(zod.object({
+  "campaignId": zod.string(),
+  "vehicleModels": zod.string(),
+  "component": zod.string(),
+  "errorDescription": zod.string(),
+  "estimatedUnitsAffected": zod.number(),
+  "remedyAction": zod.string()
+})),
+  "page": zod.number(),
+  "pageSize": zod.number(),
+  "total": zod.number(),
+  "totalPages": zod.number(),
+  "coverage": zod.object({
+  "datasetId": zod.string(),
+  "manufacturer": zod.string(),
+  "label": zod.string(),
+  "sourceFile": zod.string(),
+  "sourceDescription": zod.string(),
+  "coveragePeriod": zod.string(),
+  "synthetic": zod.boolean(),
+  "recordCount": zod.number(),
+  "estimatedUnitsAffected": zod.number()
+})
 })
 
 
