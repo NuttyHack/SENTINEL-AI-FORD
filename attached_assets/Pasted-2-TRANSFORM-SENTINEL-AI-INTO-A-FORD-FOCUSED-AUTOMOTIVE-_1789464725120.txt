@@ -1,0 +1,503 @@
+2. TRANSFORM SENTINEL AI INTO A FORD-FOCUSED AUTOMOTIVE QUALITY INTELLIGENCE PLATFORM
+
+The application should no longer feel like a generic automotive analytics platform.
+
+The primary demonstration target is Ford Motor Company.
+
+The entire product experience should communicate:
+
+Sentinel AI — AI-Powered Quality Intelligence for Ford Vehicles
+
+This is still Sentinel AI, but the demo environment should be clearly configured around Ford vehicle quality, reliability, recalls, failures, diagnostics, software, and fleet risk.
+
+Do not make the UI claim that Sentinel AI is an official Ford product or that Ford endorses Sentinel AI.
+
+Instead, clearly position it as:
+
+“Sentinel AI — Ford Vehicle Quality Intelligence Demo”
+
+or an equivalent professional wording that makes it clear this is a technology demonstration focused on Ford.
+
+Add an appropriate small disclaimer such as:
+
+“Demonstration environment using available Ford vehicle/recall data. Not affiliated with or endorsed by Ford Motor Company.”
+
+Do not fabricate Ford proprietary information that is not contained in the provided dataset.
+
+3. FORD VEHICLE VISUAL IDENTITY
+
+Replace generic automotive imagery throughout the website with Ford-focused vehicle imagery wherever appropriate.
+
+Prioritize vehicles such as:
+
+Ford F-150
+Ford F-150 Raptor
+Ford Mustang
+Ford Mustang Mach-E
+Ford Bronco
+Ford Explorer
+Ford Ranger
+Ford Super Duty
+Ford Maverick
+Ford Transit
+
+Use high-quality, professional automotive imagery that fits the existing premium dark automotive design.
+
+The visual direction should feel like a modern OEM engineering intelligence platform, not a generic SaaS dashboard.
+
+Use automotive imagery strategically rather than excessively.
+
+The application should feel sophisticated, technical, cinematic, and credible.
+
+Avoid cheesy stock imagery, low-quality images, excessive gradients, cartoon graphics, or generic “AI” imagery.
+
+4. INGEST THE PROVIDED FORD CSV DATASET
+
+I have provided a CSV dataset named:
+
+Ford Vehicle Error Recalls 2026 2.csv
+
+This dataset is extremely important.
+
+Do not reduce it to a handful of sample rows.
+
+The application must ingest and make the entire dataset available to the application.
+
+If the dataset contains millions of records, the application must be architected to handle the complete dataset efficiently.
+
+Do NOT simply import millions of records into a React component or load the entire CSV into browser memory.
+
+Instead:
+
+Inspect the CSV schema.
+Determine the number of rows.
+Determine all available columns.
+Identify vehicle information.
+Identify error/failure information.
+Identify recall information.
+Identify dates/timestamps.
+Identify vehicle models/years/configurations.
+Identify severity/failure categories if present.
+Identify VIN/vehicle identifiers if present.
+Identify any other useful quality signals.
+
+Then implement an appropriate backend data architecture.
+
+Prefer:
+
+CSV → database/optimized data store → backend API → frontend analytics
+
+rather than:
+
+CSV → browser
+
+The complete dataset must remain queryable.
+
+5. DO NOT FABRICATE DATA
+
+This is extremely important.
+
+The provided dataset is the source of truth for the Ford demonstration data.
+
+Do not invent Ford vehicle failures, recall counts, VINs, production numbers, warranty events, diagnostic codes, or other Ford-specific facts that are not actually present in the dataset.
+
+If a feature requires information that does not exist in the dataset, clearly label it as:
+
+“Not available in current dataset”
+“Requires additional OEM data”
+“Simulation”
+“Demonstration”
+
+Where useful, Sentinel AI may derive analytics mathematically from the provided records, such as:
+
+Counts
+Percentages
+Trends
+Frequencies
+Rankings
+Failure concentration
+Model distribution
+Year distribution
+Geographic distribution if available
+Error-code frequency
+Recall frequency
+Co-occurrence/correlation
+Risk scoring derived from documented data
+
+Clearly distinguish calculated insights from source data.
+
+6. MAKE THE COMMAND CENTER ACTUALLY USE THE DATA
+
+The Command Center should become the central Ford quality intelligence dashboard.
+
+It should dynamically calculate and display information from the complete dataset.
+
+Include useful executive-level metrics such as:
+
+Total vehicles/records represented
+Total error events
+Total recalls represented
+Affected vehicle population
+Highest-risk vehicle models
+Most frequent failure categories
+Most frequent error codes
+Failure trends over time
+Recall trends
+Model-year distribution
+Severity distribution where supported
+Emerging quality signals
+
+Do not hardcode these numbers.
+
+Every metric should be calculated from the underlying dataset.
+
+7. VEHICLE INTELLIGENCE
+
+Build a Ford Vehicle Intelligence experience where a user can search/filter the available vehicle data.
+
+Users should be able to filter by whatever dimensions actually exist in the CSV, such as:
+
+Model
+Model year
+Vehicle type
+Error
+Error category
+Recall
+Date
+Severity
+VIN/vehicle identifier if present
+Other relevant dataset fields
+
+Selecting a vehicle/model should produce a detailed quality profile.
+
+Show:
+
+Vehicle/model information
+Associated errors
+Associated recalls
+Frequency
+Trends
+Related failure categories
+Risk indicators
+Supporting records
+8. FAILURE & RECALL INTELLIGENCE
+
+Create a powerful experience for understanding failures and recalls.
+
+The user should be able to answer questions such as:
+
+“Which Ford vehicles are experiencing the most quality issues?”
+
+“What are the most common failure types?”
+
+“Which model years are most affected?”
+
+“Which problems are increasing?”
+
+“Which errors occur together?”
+
+“Which vehicle populations appear most exposed?”
+
+“What are the most significant quality signals in the dataset?”
+
+The UI should make these answers easy to discover.
+
+Use:
+
+Interactive charts
+Trend graphs
+Tables
+Rankings
+Filters
+Drill-down views
+Search
+Detail panels
+9. AI QUALITY INTELLIGENCE
+
+Sentinel AI should demonstrate what an AI quality-intelligence platform could do with this data.
+
+Build an AI Insights / Quality Intelligence layer on top of the actual dataset.
+
+Examples:
+
+Emerging failure detection
+Anomaly detection
+Failure concentration
+Risk prioritization
+Pattern detection
+Error co-occurrence analysis
+Vehicle population segmentation
+Recall risk indicators
+Investigation recommendations
+
+These insights must be explainable.
+
+Every AI-generated insight should show:
+
+Signal → Evidence → Affected population → Possible explanation → Recommended investigation
+
+Do not pretend that a statistical correlation is a confirmed engineering root cause.
+
+Use wording such as:
+
+“Potential correlation detected”
+
+“Requires engineering validation”
+
+“Evidence suggests…”
+
+rather than claiming certainty.
+
+10. RISK EXPLORER
+
+Upgrade the existing Risk Explorer so it is powered by the Ford dataset.
+
+Allow users to identify and rank potential quality risks.
+
+Provide:
+
+Risk score
+Number of affected records
+Failure frequency
+Trend direction
+Vehicle models affected
+Model years affected
+Supporting evidence
+Investigation priority
+
+Make the scoring methodology transparent.
+
+Include an explanation such as:
+
+“Risk score is calculated from observed frequency, affected population, trend behavior, and available severity indicators in the demonstration dataset.”
+
+11. INVESTIGATION WORKFLOW
+
+Improve the investigation workflow so an engineer can start with a quality signal and drill into evidence.
+
+Example flow:
+
+Quality Signal
+
+↓
+
+Affected Ford Vehicle Population
+
+↓
+
+Failure/Error Pattern
+
+↓
+
+Model / Model Year / Configuration
+
+↓
+
+Supporting Records
+
+↓
+
+Potential Root-Cause Hypotheses
+
+↓
+
+Recommended Engineering Investigation
+
+The system should make this feel like a real engineering workflow rather than a static dashboard.
+
+12. REPORTING
+
+Upgrade the reporting functionality.
+
+Allow the user to generate a professional quality intelligence report based on the selected Ford data.
+
+Reports should contain:
+
+Executive summary
+Quality signal
+Affected vehicle population
+Failure/recall statistics
+Trends
+Supporting evidence
+Risk assessment
+AI-generated observations
+Recommended next steps
+
+Make reports suitable for an engineering or quality-management demonstration.
+
+13. SEARCH AND FILTERING MUST SCALE
+
+If the dataset contains millions of rows, implement:
+
+Server-side pagination
+Server-side filtering
+Server-side sorting
+Indexed database queries
+Search optimization
+Aggregation queries
+Lazy loading
+Virtualized tables where appropriate
+
+Never render millions of rows simultaneously in the browser.
+
+The user should still be able to access the entire dataset through search, filters, aggregation, and pagination.
+
+The UI should remain fast and responsive.
+
+14. DATA TRANSPARENCY
+
+Add a Data Source / Dataset Information section.
+
+It should tell the user:
+
+Dataset name
+Number of records
+Available fields
+Data coverage
+Last updated/imported date
+Which metrics are calculated
+Which functionality requires additional OEM data
+
+This makes the demonstration much more credible.
+
+15. PREMIUM OEM-LEVEL DESIGN
+
+The website should look like a serious automotive engineering intelligence product.
+
+Design direction:
+
+Premium
+Dark
+Technical
+Minimal
+Automotive
+High information density without becoming cluttered
+Excellent typography
+Subtle motion
+Professional charts
+Clean cards/panels
+Strong visual hierarchy
+Responsive
+
+Think:
+
+OEM engineering command center + modern AI platform
+
+rather than:
+
+generic startup dashboard
+
+Keep the existing Sentinel AI visual identity where appropriate, but significantly improve anything that currently looks unfinished or generic.
+
+16. FORD-SPECIFIC DASHBOARD LANGUAGE
+
+Throughout the demo, use Ford-oriented terminology where supported.
+
+Examples:
+
+Ford Vehicle Quality
+Ford Fleet Intelligence
+Ford Recall Intelligence
+Ford Quality Signals
+Ford Vehicle Population
+Ford Failure Intelligence
+Ford Model Risk
+Ford Quality Investigations
+
+Do not claim access to Ford internal systems.
+
+Clearly distinguish between:
+
+Provided dataset
+
+Derived analytics
+
+Sentinel AI analysis
+
+Simulated functionality
+
+Future OEM integrations
+
+17. KEEP EXISTING FEATURES
+
+Do not remove useful existing Sentinel AI functionality.
+
+Preserve and improve:
+
+Command Center
+Recall Radar
+Software Intelligence
+OTA Simulator
+Digital Twins
+Risk Explorer
+Investigation workflows
+Reports
+Analytics
+Transparency
+Settings
+
+Where a feature currently uses generic or synthetic data, replace it with the real provided Ford dataset where the schema supports it.
+
+If a feature genuinely requires data not contained in the CSV, keep the feature but clearly label the unsupported portions as simulation/future integration.
+
+18. IMPORTANT — AUDIT THE ENTIRE APPLICATION AFTER IMPLEMENTATION
+
+After implementing all changes:
+
+Run the application.
+Verify every route.
+Verify every navigation item.
+Verify the new logo everywhere.
+Verify the favicon.
+Verify the Ford imagery.
+Verify the CSV is fully ingested.
+Verify the actual record count.
+Verify database/API queries.
+Verify filtering.
+Verify search.
+Verify pagination.
+Verify charts.
+Verify risk calculations.
+Verify AI insights.
+Verify reports.
+Check browser console for errors.
+Check server logs for errors.
+Fix TypeScript/build errors.
+Fix broken links/routes.
+Test with a large dataset rather than only a small sample.
+
+Do not tell me the implementation is complete until you have actually tested the application.
+
+19. VERY IMPORTANT DATA REQUIREMENT
+
+Do not silently truncate, sample, or discard the CSV because it is large.
+
+The complete source dataset must be preserved and queryable.
+
+If the dataset is too large for the current database architecture, redesign the data ingestion/query layer appropriately.
+
+The frontend does NOT need to download all records at once.
+
+Instead, the system should provide complete access to the dataset through efficient backend queries and aggregations.
+
+20. FINAL PRODUCT GOAL
+
+When I open the application, I want it to immediately feel like:
+
+“This is an AI quality-intelligence platform designed to help Ford engineers and quality teams detect vehicle problems earlier, understand affected populations, investigate failures, prioritize risk, and make better quality decisions.”
+
+The application should demonstrate the value of Sentinel AI using the provided Ford dataset rather than relying primarily on fake/demo numbers.
+
+Do not simply make cosmetic changes. Make the application genuinely data-driven.
+
+Before finishing, provide me with a concise implementation summary containing:
+
+Files changed
+Database/data architecture used
+Number of CSV records successfully ingested
+Fields discovered
+New Ford-specific features
+AI/analytics capabilities implemented
+Any features that remain simulated because the dataset does not contain the required information
+Any limitations or recommended next steps
+One thing I'd add before you send it

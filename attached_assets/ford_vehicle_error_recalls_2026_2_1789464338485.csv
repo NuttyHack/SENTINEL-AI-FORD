@@ -1,0 +1,6 @@
+NHTSA_Campaign_ID,Vehicle_Models,Component_System,Error_Description,Estimated_Units_Affected,Remedy_Action
+26V547000,Mustang (2024-2025),Electrical / Wiring Harness,"Engine compartment wiring harness connections failing, causing immediate loss of vehicle drive power.",149000,Physical Dealer Inspection/Replacement
+26V112000,"F-150, Maverick, Expedition (2021-2024)",Trailer Brake Software,Communication break between vehicle and towed trailers dropping brake light activation and indicator signals.,4300000,Over-the-Air (OTA) Software Patch
+26V124000,"Mach-E, Explorer (2023-2024)",Infotainment / APIM Logic,Overheating computing logic causing safety-critical rear-view camera feeds to freeze or black out.,245000,Dealer Software Update / Module Swap
+26V492000,"F-150, Lightning, Escape (2023-2025)",SYNC Screen Graphics,Graphic rendering bug where the SYNC home screen improperly overlays the live backup video feed while in reverse.,56000,Over-the-Air (OTA) Software Update
+26V343000,"Bronco, Ranger, Explorer (2024-2025)",Engine / Valve Assembly,Incorrectly calibrated factory QA sensors missed microscopic structural cracking inside engine intake valves.,91000,Physical Engine Component Replacement
